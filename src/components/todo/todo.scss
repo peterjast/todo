@@ -24,7 +24,9 @@ body, html {
 
 }
 
-
+.list-group-item:hover {
+  cursor: pointer;
+}
 .todo {
 
   width: 90%;
@@ -32,11 +34,6 @@ body, html {
   flex-direction:row;
   justify-content: flex-start;
   margin: auto;
-
-  .label {
-    background-color: darkgrey;
-    color: whitesmoke;
-  }
 
   form {
       display:flex;
