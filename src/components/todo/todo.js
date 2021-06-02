@@ -70,7 +70,7 @@ function ToDo(props) {
             </Col>
           </Row>
           <Row>
-            <Col xs={3}>
+            <Col xs={4}>
               <TodoForm handleSubmit={_addItem} />
             </Col>
             <Col className="mx-5">
