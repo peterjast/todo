@@ -69,7 +69,7 @@ function ToDo(props) {
             </Navbar>
             </Col>
           </Row>
-          <Row>
+          <Row className="mt-3">
             <Col xs={4}>
               <TodoForm handleSubmit={_addItem} />
             </Col>

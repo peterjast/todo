@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function TodoForm(props) {
 
@@ -21,9 +23,9 @@ function TodoForm(props) {
   return (
     <>
       <Card>
-      <Card.Title className="mx-3 mt-3 mb-0">Add To Do Item</Card.Title>
+      <Card.Title className="px-2 mx-4 mt-4 mb-0">Add To Do Item</Card.Title>
         <Card.Body>
-          <Form onSubmit={_handleSubmit} className="mx-auto">
+          <Form onSubmit={_handleSubmit} className="mx-auto px-3">
             <Form.Group>
               <Form.Label className="mb-1 mt-0">To Do Item</Form.Label>
               <Form.Control name="text" type="text" placeholder="Item Details" onChange={_handleInputChange} />
@@ -34,7 +36,11 @@ function TodoForm(props) {
               <input className="mb-4 w-100" defaultValue="1" type="range" min="1" max="5" name="difficulty" onChange={_handleInputChange} />
               <br />
             </Form.Group>
-            <Button className="w-50" type="submit">Add Item</Button>
+            <Row>
+              <Col xs={5}>
+                <Button className="w-100 py-2 mb-2" type="submit">Add Item</Button>
+              </Col>
+            </Row>
           </Form>
         </Card.Body>
       </Card>
