@@ -33,7 +33,6 @@ function ToDo(props) {
   };
 
   useEffect(() => {
-  
     setList([
       { _id: 1, complete: false, text: 'Clean the Kitchen', difficulty: 3, assignee: 'Person A'},
       { _id: 2, complete: false, text: 'Do the Laundry', difficulty: 2, assignee: 'Person A'},
@@ -41,7 +40,6 @@ function ToDo(props) {
       { _id: 4, complete: true, text: 'Do Homework', difficulty: 3, assignee: 'Person C'},
       { _id: 5, complete: false, text: 'Take a Nap', difficulty: 1, assignee: 'Person B'},
     ]);
-  
   }, []);
 
   useEffect(() => {
@@ -66,7 +64,7 @@ function ToDo(props) {
             <Col>
             <Navbar bg="dark" variant="dark" className="my-4">
               <Navbar.Brand className="mx-3">
-               To Do List Manager({list.filter(item => !item.complete).length})
+                To Do List Manager({list.filter(item => !item.complete).length})
               </Navbar.Brand>
             </Navbar>
             </Col>
@@ -75,7 +73,7 @@ function ToDo(props) {
             <Col xs={3}>
               <TodoForm handleSubmit={_addItem} />
             </Col>
-            <Col>
+            <Col className="mx-5">
               <TodoList
                 list={list}
                 handleComplete={_toggleComplete}
