@@ -1,6 +1,8 @@
 # To Do List Management System
 
-PR #1: [https://github.com/peterjast/todo/pull/1](https://github.com/peterjast/todo/pull/1)
+Lab #1 PR: [https://github.com/peterjast/todo/pull/1](https://github.com/peterjast/todo/pull/1)
+
+Lab #2 PR: [https://github.com/peterjast/todo/pull/5](https://github.com/peterjast/todo/pull/5)
 
 Deployed: [https://ps-todo.netlify.app/](https://ps-todo.netlify.app/)
 
@@ -10,7 +12,7 @@ npm i
 
 ## Run the applications
 
-npm start
+npm run start
 
 ## Data Flow
 

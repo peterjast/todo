@@ -1,20 +1,32 @@
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
+import Badge from 'react-bootstrap/Badge';
+import Button from 'react-bootstrap/Button';
 
 function TodoList(props) {
   return (
-    <Card style={{ width: '32rem' }}>
-      <ListGroup variant="flush">
-        <>
-        {props.list.map(item => (
-          <ListGroup.Item variant={item.complete ? "danger" : "success"} className={`complete-${item.complete.toString()} py-3`} key={item._id} onClick={() => props.handleComplete(item._id)}>
-            {item.complete ? `${item.text} ✅` : item.text} 
+    <>
+    {props.list.map(item => (
+      <Card className="mb-4" style={{ width: '28rem' }} key={item._id}>
+        <ListGroup variant="flush">
+          <ListGroup.Item>
+          <>
+            <Badge pill bg={item.complete ? "danger" : "success"} className={`complete-${item.complete.toString()}`} key={item._id} onClick={() => props.handleComplete(item._id)}>
+              {item.complete ? "Complete" : " Pending "}
+            </Badge>
+              <b className="item-asignee">{item.assignee}</b>
+              <b className="close" aria-label="Close" onClick={() => props.handleDelete(item._id)}>&times;</b>
+            </>
           </ListGroup.Item>
-        ))}
-        </>
-      </ListGroup>
-    </Card>
+          <ListGroup.Item>
+            <p className="item-text">{item.text}</p>
+            <p className="item-difficulty">{`Difficulty: ${item.difficulty}`}</p>
+          </ListGroup.Item>
+        </ListGroup>
+      </Card>
+    ))}
+    </>
   );
 }
 
