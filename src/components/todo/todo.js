@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
 import Nav from 'react-bootstrap/Nav';
@@ -7,40 +7,15 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import useAjax from '../../hooks/ajax.js';
 
-import './todo.scss';
+import '../../styles/todo.scss';
 
-function ToDo(props) {
+const ToDo = () => {
 
-  const [list, setList] = useState([]);
+  const [addItem, toggleComplete, getTodoItems, deleteItem, list] = useAjax();
 
-  const _addItem = (item) => {
-    item._id = Math.random();
-    item.complete = false;
-    setList([...list, item]);
-  };
-
-  const _toggleComplete = id => {
-
-    let item = list.filter(i => i._id === id)[0] || {};
-
-    if (item._id) {
-      item.complete = !item.complete;
-      setList(list.map(listItem => listItem._id === item._id ? item : listItem));
-    }
-
-  };
-
-  useEffect(() => {
-    setList([
-      { _id: 1, complete: false, text: 'Clean the Kitchen', difficulty: 3, assignee: 'Person A'},
-      { _id: 2, complete: false, text: 'Do the Laundry', difficulty: 2, assignee: 'Person A'},
-      { _id: 3, complete: false, text: 'Walk the Dog', difficulty: 4, assignee: 'Person B'},
-      { _id: 4, complete: true, text: 'Do Homework', difficulty: 3, assignee: 'Person C'},
-      { _id: 5, complete: false, text: 'Take a Nap', difficulty: 1, assignee: 'Person B'},
-    ]);
-  }, []);
+  useEffect(getTodoItems, []);
 
   useEffect(() => {
     document.title = `To-Do: ${list.filter(item => !item.complete).length} Completed: ${list.filter(item => item.complete).length}`
@@ -71,12 +46,13 @@ function ToDo(props) {
           </Row>
           <Row className="mt-3">
             <Col xs={4}>
-              <TodoForm handleSubmit={_addItem} />
+              <TodoForm handleSubmit={addItem} />
             </Col>
             <Col className="mx-5">
               <TodoList
                 list={list}
-                handleComplete={_toggleComplete}
+                handleComplete={toggleComplete}
+                handleDelete={deleteItem}
               />
             </Col>
           </Row>
@@ -84,6 +60,6 @@ function ToDo(props) {
       </section>
     </>
   );
-}
+};
 
 export default ToDo;

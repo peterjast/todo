@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import TodoForm from './form.js';
-import TodoList from './list.js';
-
-import './todo.scss';
+import { useState } from 'react';
 
 const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
 
-const ToDo = () => {
+const useAjax = () => {
 
   const [list, setList] = useState([]);
 
-  const _addItem = (item) => {
+  const addItem = (item) => {
     item.due = new Date();
     fetch(todoAPI, {
       method: 'post',
@@ -26,7 +22,7 @@ const ToDo = () => {
       .catch(console.error);
   };
 
-  const _toggleComplete = id => {
+  const toggleComplete = id => {
 
     let item = list.filter(i => i._id === id)[0] || {};
 
@@ -51,7 +47,7 @@ const ToDo = () => {
     }
   };
 
-  const _getTodoItems = () => {
+  const getTodoItems = () => {
     fetch(todoAPI, {
       method: 'get',
       mode: 'cors',
@@ -61,30 +57,22 @@ const ToDo = () => {
       .catch(console.error);
   };
 
-  useEffect(_getTodoItems, []);
+  const deleteItem = (id) => {
+    fetch(`${todoAPI}/${id}`, {
+      method: 'delete',
+      mode: 'cors',
+    })
+      .then(() => getTodoItems())
+      .catch(console.error);
+  }
 
-  return (
-    <>
-      <header>
-        <h2>
-          There are {list.filter(item => !item.complete).length} Items To Complete
-        </h2>
-      </header>
+  return [
+    addItem,
+    toggleComplete,
+    getTodoItems,
+    deleteItem,
+    list
+  ]
+}
 
-      <section className="todo">
-        <div>
-          <TodoForm handleSubmit={_addItem} />
-        </div>
-
-        <div>
-          <TodoList
-            list={list}
-            handleComplete={_toggleComplete}
-          />
-        </div>
-      </section>
-    </>
-  );
-};
-
-export default ToDo;
+export default useAjax;
