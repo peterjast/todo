@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
-import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -23,16 +22,6 @@ const ToDo = () => {
 
   return (
     <>
-      <header>
-        <Navbar bg="primary" variant="dark">
-          <Nav className="mr-auto">
-            <Nav.Item>
-                <Nav.Link href="/home" className="mx-5">Home</Nav.Link>
-            </Nav.Item>
-          </Nav>
-        </Navbar>
-      </header>
-
       <section className="todo">
         <Container>
           <Row>
