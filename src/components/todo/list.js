@@ -81,7 +81,7 @@ function TodoList(props) {
         <Button onClick={previous}>Previous</Button>
       </Then>
     </If>
-    <If condition={props.list.length - start > context.itemsPerPage}>
+    <If condition={start + context.itemsPerPage < sortedList.length}>
       <Then>
         <Button onClick={next}>Next</Button>
       </Then>
