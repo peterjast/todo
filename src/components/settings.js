@@ -9,29 +9,6 @@ import { SettingsContext } from '../context/settings.js';
 const Settings = () => {
 
   const context = useContext(SettingsContext);
-  // const [sortSelection, setSortSelection] = useState('Easiest');
-  // const [itemsSelection, setItemsSelection] = useState(1);
-  // const [completedSelection, setCompletedSelection] = useState(true);
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log(sortSelection, itemsSelection, completedSelection);
-  //   sort(sortSelection);
-  //   item(itemsSelection);
-  //   show(completedSelection);
-  // }
-
-  // const changeComplete = (e) => {
-  //   setCompletedSelection(e.target.value);
-  // }
-
-  // const changeSort = (e) => {
-  //   setSortSelection(e.target.value);
-  // }
-
-  // const changeItems = (e) => {
-  //   setItemsSelection(e.target.value);
-  // }
 
   return (
     <>

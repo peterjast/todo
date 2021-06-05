@@ -14,7 +14,7 @@ const ToDo = () => {
 
   const [addItem, toggleComplete, getTodoItems, deleteItem, list] = useAjax();
 
-  useEffect(getTodoItems, []);
+  useEffect(getTodoItems, [list]);
 
   useEffect(() => {
     document.title = `To-Do: ${list.filter(item => !item.complete).length} Completed: ${list.filter(item => item.complete).length}`
