@@ -3,6 +3,9 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { If, Then } from 'react-if';
 
 import { SettingsContext } from '../../context/settings.js';
@@ -13,41 +16,28 @@ function TodoList(props) {
 
   let sortedList = props.list;
 
+  if(!context.showCompleted){
+    sortedList = sortedList.filter(item => !item.complete);
+  }
+
   switch(context.sortBy){
     case 'Latest':
-      sortedList = props.list.sort((a, b) => (a.due < b.due) ? 1: -1);
+      sortedList = sortedList.sort((a, b) => (a.due < b.due) ? 1: -1);
       break;
       case 'Oldest':
-        sortedList = props.list.sort((a, b) => (a.due > b.due) ? 1: -1);
+        sortedList = sortedList.sort((a, b) => (a.due > b.due) ? 1: -1);
         break;
     case 'Easiest':
-      sortedList = props.list.sort((a, b) => (a.difficulty > b.difficulty) ? 1: -1);
+        sortedList = sortedList.sort((a, b) => (a.difficulty > b.difficulty) ? 1: -1);
       break;
     case 'Hardest':
-      sortedList = props.list.sort((a, b) => (a.difficulty < b.difficulty) ? 1: -1);
+        sortedList = sortedList.sort((a, b) => (a.difficulty < b.difficulty) ? 1: -1);
       break;
     default:
       sortedList = props.list;
   }
 
-  if(!context.showCompleted){
-    let pending = sortedList.filter(item => !item.complete);
-    sortedList = pending;
-  }
-
-  let displayList = sortedList;
-
-  if(props.list.length > context.itemsPerPage){
-    displayList = sortedList.slice(start, start + context.itemsPerPage);
-  };
-  
-  useEffect(() => {
-    if(props.list.length - start < context.itemsPerPage){
-      displayList = sortedList.slice(start);
-    } else {
-      displayList = sortedList.slice(start, start + context.itemsPerPage)
-    }
-  }, [start]);
+  let displayList = sortedList.length - start < context.itemsPerPage ? sortedList.slice(start) : sortedList.slice(start, start + context.itemsPerPage);
 
   function next() {
     setStart(start + context.itemsPerPage);
@@ -58,35 +48,48 @@ function TodoList(props) {
   }
 
   return (
-    <>
-    {displayList.map(item => (
-      <Card className="mb-4" style={{ width: '28rem' }} key={item._id}>
-        <ListGroup variant="flush">
-          <ListGroup.Item>
-            <Badge pill bg={item.complete ? "danger" : "success"} className={`complete-${item.complete.toString()}`} key={item._id} onClick={() => props.handleComplete(item._id)}>
-              {item.complete ? "Complete" : " Pending "}
-            </Badge>
-            <b className="item-asignee">{item.assignee}</b>
-            <b className="close" aria-label="Close" onClick={() => props.handleDelete(item._id)}>&times;</b>
-          </ListGroup.Item>
-          <ListGroup.Item>
-            <p className="item-text">{item.text}</p>
-            <p className="item-difficulty">{`Difficulty: ${item.difficulty}`}</p>
-          </ListGroup.Item>
-        </ListGroup>
-      </Card>
-    ))}
-    <If condition={start > 0}>
-      <Then>
-        <Button onClick={previous}>Previous</Button>
-      </Then>
-    </If>
-    <If condition={start + context.itemsPerPage < sortedList.length}>
-      <Then>
-        <Button onClick={next}>Next</Button>
-      </Then>
-    </If>
-    </>
+    <Container>
+      {displayList.map(item => (
+        <Card className="mb-4" style={{ width: '30rem' }} key={item._id}>
+          <ListGroup variant="flush">
+            <ListGroup.Item>
+              <Badge pill bg={item.complete ? "danger" : "success"} className={`complete-${item.complete.toString()}`} key={item._id} onClick={() => props.handleComplete(item._id)}>
+                {item.complete ? "Complete" : " Pending "}
+              </Badge>
+              <b className="item-asignee">{item.assignee}</b>
+              <b className="close" aria-label="Close" onClick={() => props.handleDelete(item._id)}>&times;</b>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <p className="item-text">{item.text}</p>
+              <p className="item-difficulty">{`Difficulty: ${item.difficulty}`}</p>
+            </ListGroup.Item>
+          </ListGroup>
+        </Card>
+      ))}
+      <Row>
+        <Col>
+          <If condition={start > 0}>
+            <Then>
+              <Button className="mx-1" onClick={previous}>Previous</Button>
+            </Then>
+          </If>
+        </Col>
+        <Col>
+          <If condition={start+context.itemsPerPage < sortedList.length}>
+            <Then>
+              {`${start +1}-${start+context.itemsPerPage} of ${sortedList.length}`}
+            </Then>
+          </If>
+        </Col>
+        <Col>
+          <If condition={start + context.itemsPerPage < sortedList.length}>
+            <Then>
+              <Button className="" onClick={next}>Next</Button>
+            </Then>
+          </If>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
