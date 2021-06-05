@@ -75,7 +75,7 @@ function TodoList(props) {
           </If>
         </Col>
         <Col>
-          <If condition={start+context.itemsPerPage < sortedList.length}>
+          <If condition={start + context.itemsPerPage <= sortedList.length}>
             <Then>
               {`${start +1}-${start+context.itemsPerPage} of ${sortedList.length}`}
             </Then>
